@@ -11,7 +11,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.inMemoryAuthentication().passwordEncoder(org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance()).withUser("user1").password("secret1")
-				.roles("USER").and().withUser("admin1").password(" ")
+				.roles("USER").and().withUser("admin1").password("secret1")
 				.roles("USER", "ADMIN");
 	}
 
@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// survey -> USER
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().and().authorizeRequests().antMatchers("/surveys/**")
-				.hasRole("USER").antMatchers("/users/**").hasRole(" ")
+				.hasRole("USER").antMatchers("/users/**").hasRole("secret1")
 				.antMatchers("/**").hasRole("ADMIN").and().csrf().disable()
 				.headers().frameOptions().disable();
 	}
